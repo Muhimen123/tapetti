@@ -10,11 +10,7 @@ def command_controller(command: list):
     """
 
     if "view".upper() in command[1].upper():
-        if len(command) >= 3:
-            link = command[2]
-            imageViewer.image_viewer(link)
-        else:
-            imageViewer.image_viewer()
+        imageViewer.image_viewer()
 
     elif "download".upper() in command[1].upper():
         downloader.download_image()
