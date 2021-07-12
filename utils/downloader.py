@@ -1,6 +1,7 @@
 import os
 import requests
 from PyInquirer import prompt
+from rich.progress import Progress
 from colorama import Fore, Back, Style
 
 
@@ -17,21 +18,38 @@ def download_image(link: str = None, path: str = None, file_name: str = None):
         link, path, file_name = download_prompt()
 
     try:
-        print("Downloading the file")
-        response = requests.get(link)
-
-        if response.status_code == 200:
-            with open(path+file_name, "wb") as file:
-                file.write(response.content)
-            print(Fore.GREEN + "Downloaded successfully" + Style.RESET_ALL)
-
-        else:
-            print(response.status_code, "Error")
+        download_content(link, path, file_name)
 
     except Exception as error:
         print(error)
         pass
         # TODO: Show proper error message
+
+
+def download_content(link: str, path: str, file_name: str):
+    """
+    Downloads the image with request stream and shows downloading progress bar
+    :param link: link of the image to download
+    :param path: path where to download the image
+    :param file_name: Name for the downloaded image
+    """
+
+    with requests.get(link, stream=True) as res:
+        image_size = int(res.headers.get('content-length', 0))
+        chunk_size = 1024
+        image_content = res.iter_content(chunk_size)
+
+        with Progress() as progress:
+            download_task = progress.add_task(f"[green] {file_name}", total=image_size)
+
+            full_path = path + file_name
+            with open(full_path, "wb") as image_file:
+                for chunk in image_content:
+                    image_file.write(chunk)
+                    progress.update(download_task, advance=len(chunk))
+
+            while not progress.finished:
+                progress.update(task, advance=chunk_size)
 
 
 def download_prompt():
