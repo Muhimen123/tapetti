@@ -1,7 +1,7 @@
 from utils import imageViewer
 from utils import downloader
 from utils import imageSaver
-
+from utils import imageBrowser
 
 def command_controller(command: list):
     """
@@ -21,3 +21,7 @@ def command_controller(command: list):
 
     elif "save".upper() in command[1].upper():
         imageSaver.save_image()
+
+    elif "browse".upper() in command[1].upper():
+        imageBrowser.browser_image()
+
