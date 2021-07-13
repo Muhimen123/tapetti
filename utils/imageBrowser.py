@@ -23,7 +23,6 @@ def browser_image(start: int = 0, limit: int = 15):
         else:
             print(Fore.RED + f"Oops, something went wrong {response.status_code}" + Style.RESET_ALL)
     except Exception as error:
-        print(error)
         print(Fore.RED + "Turns out you are not connected to the internet" + Style.RESET_ALL)
 
 

@@ -2,6 +2,7 @@ from utils import imageViewer
 from utils import downloader
 from utils import imageSaver
 from utils import imageBrowser
+from utils import imageSearch  
 
 def command_controller(command: list):
     """
@@ -20,4 +21,7 @@ def command_controller(command: list):
 
     elif "browse".upper() in command[1].upper():
         imageBrowser.browser_image()
+    
+    elif "search".upper() in command[1].upper():
+        imageSearch.search_image()
 
