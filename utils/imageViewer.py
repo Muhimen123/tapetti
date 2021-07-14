@@ -74,7 +74,7 @@ def tid_repo_prompt(image_data_url: str):
 
     except Exception as error:
         print(error)
-        print(Fore.RED + "Perhaps you are not connected to the internet. Mind checking it again?")
+        print(Fore.RED + "Perhaps you are not connected to the internet. Mind checking it again?" + Style.RESEST_ALL)
     
     return link
 

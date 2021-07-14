@@ -71,8 +71,6 @@ def download_prompt():
         }
     ]
 
-    print(Fore.BLUE, end="")
-
     link = input("Please enter download link: ")
 
     answer = prompt(questions)['path_type']
@@ -89,11 +87,9 @@ def download_prompt():
         file_name = input("File name(include extension): ")
 
         if os.path.isfile(path + '\\' + file_name):
-            print(Fore.RED + "A file with the name already exists. Please enter another one." + Fore.GREEN)
+            print(Fore.RED + "A file with the name already exists. Please enter another one." + Style.RESET_ALL)
         else:
             break
-
-    print(Style.RESET_ALL, end="")
 
     return link, path, file_name
 
