@@ -3,16 +3,16 @@ import ctypes
 from utils import downloader
 from PyInquirer import prompt
 from colorama import Fore, Style
+from utils.imageViewer import tid_repo_prompt
 
 
 def save_image():
+
     """
     sets the image as the desktop wallpaper
     If a link is given then first download the image
     :param path: Absolute or relative path to the file
     """
-
-    print(Fore.BLUE, end="") 
     
     questions = [
         {
@@ -20,6 +20,7 @@ def save_image():
             "name": "download_type",
             "message": "Set wallpaper from: ",
             "choices": [
+                "TID Repo",
                 "Link",
                 "Path"
             ]
@@ -28,12 +29,16 @@ def save_image():
 
     answer = prompt(questions)["download_type"]
 
-    if answer == 'Link':
-        link = input("Please enter download link: ")
+    if answer != 'Path':
+        if answer == 'TID Repo':
+            image_data_url = "https://raw.githubusercontent.com/Muhimen123/TID/main/image_data.json"
+            link = tid_repo_prompt(image_data_url)
+
+        else:
+            link = input("Please enter download link: ")
 
         path = os.getcwd() + "\\data\\images\\"
         downloader.download_image(link, path, "current_desktop_wallpaper.png")
-        
         wallpaper_path = path + "current_desktop_wallpaper.png"
     
     else:
@@ -68,7 +73,6 @@ def save_image():
                 break
             else:
                 print(Fore.RED + f"No file found in path {path}" + Fore.BLUE)
-
 
     is_changed = ctypes.windll.user32.SystemParametersInfoW(20, 0, wallpaper_path, 0)
 
