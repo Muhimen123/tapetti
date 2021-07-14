@@ -1,0 +1,32 @@
+[
+  {
+      "command_name": "browse",
+      "description": "Browse image from the TID repo.",
+      "requirements": [null]
+  },
+  {
+      "command_name": "download",
+      "description": "Downloads an image",
+      "requirements": ["image link", "path", "file name"]
+  },
+  {
+      "command_name": "help",
+      "description": "Shows this message",
+      "requirements": [null]
+  },
+  {
+      "command_name": "save",
+      "description": "Sets an image as the desktop wallpaper",
+      "requirements": ["link or path"]
+  },
+  {
+      "command_name": "search",
+      "description": "Search images in the TID repo",
+      "requirements": ["tag"]
+  },
+  {
+      "command_name": "view",
+      "description": "Open an image to preview",
+      "requirements": ["image link or TID image number"] 
+  }
+]

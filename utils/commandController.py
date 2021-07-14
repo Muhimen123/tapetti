@@ -3,6 +3,7 @@ from utils import downloader
 from utils import imageSaver
 from utils import imageBrowser
 from utils import imageSearch  
+from utils import helpMessage 
 
 def command_controller(command: list):
     """
@@ -24,4 +25,7 @@ def command_controller(command: list):
     
     elif "search".upper() in command[1].upper():
         imageSearch.search_image()
+
+    elif "help".upper() in command[1].upper():
+        helpMessage.help_message()
 
