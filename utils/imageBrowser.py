@@ -44,15 +44,21 @@ def generate_table(image_data: list):
     image_data_table.add_column("File Type")
     image_data_table.add_column("Resolution")
     image_data_table.add_column("Orientation")
+    image_data_table.add_column("Theme")
+    image_data_table.add_column("Color")
 
     for idx, image in enumerate(image_data):
         no = str(idx+1)
         name = image["image_name"]
         file_type = image["file_type"]
-        resolution = str(image["width"]) + " x " + str(image["height"])
-        ori = "Horizontal" if image["orientation"] else "Vertical"
+        height = image["height"]
+        width = image["width"]
+        resolution = f"{width}x{height}"
+        orientation = "Horizontal" if width > height else "Vertical"        
+        theme = image["theme"]
+        color = " ".join(image["color"][:min(len(image["color"]), 3)])
 
-        image_data_table.add_row(no, name, file_type, resolution, ori)
+        image_data_table.add_row(no, name, file_type, resolution, orientation, theme, color)
 
     console = Console()
     console.print(image_data_table)
