@@ -1,3 +1,16 @@
+<center>
+
+![Tapetti Banner](http://res.cloudinary.com/muhimen/image/upload/v1626590712/xlqpowgocxe2jd5wbxiv.png)
+
+
+</center>
+
+<div align="center">
+
+![platform](https://img.shields.io/badge/Platform-Windows-blue?style=flat-square&logo=windows) ![language](https://img.shields.io/badge/Language-Python%203-yellow?style=flat-square&logo=python) ![license](https://img.shields.io/badge/License-MIT-blueviolet?style=flat-square&logo=files)
+
+</div>
+
 # TAPETTI
 
 Tapetti is a wallpaper manager that you never asked for. Feature-rich yet minimalistic, powerful yet simple to use. Save, download, manage all your wallpapers in one go!
