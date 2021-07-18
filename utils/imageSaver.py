@@ -1,5 +1,6 @@
 import os
 import ctypes
+import platform
 from utils import downloader
 from PyInquirer import prompt
 from colorama import Fore, Style
@@ -73,8 +74,18 @@ def save_image():
                 break
             else:
                 print(Fore.RED + f"No file found in path {path}" + Fore.BLUE)
-
-    is_changed = ctypes.windll.user32.SystemParametersInfoW(20, 0, wallpaper_path, 0)
+    
+    system_os = platform.system()
+    
+    if system_os == "Windows":
+        is_changed = change_windows_wallpaper(wallpaper_path)
+    elif system_os == "Darwin":
+        is_changed = change_mac_wallpaper(wallpaper_path)
+    elif system_os == "Linux":
+        is_changed = change_linux_wallpaper(wallpaper_path)
+    else:
+        print(Fore.RED + "Sorry, couldn't detect OS.")
+        is_changed = 0
 
     if is_changed:
         print(Fore.GREEN + "Changed the wallpaper")
@@ -82,4 +93,18 @@ def save_image():
         print(Fore.RED + "Couldn't change the wallpaper")
 
     print(Style.RESET_ALL)
+
+
+def change_windows_wallpaper(wallpaper_path):
+    is_changed = ctypes.windll.user32.SystemParametersInfoW(20, 0, wallpaper_path, 0)
+    return is_changed
+
+def change_mac_wallpaper(wallpaper_path):
+    print("Oops, MacOS not yet supported")
+    return 0
+
+
+def change_linux_wallpaper(wallpaper_path):
+    print("Oops, GNU/Linux not yet supported")
+    return 0
 
