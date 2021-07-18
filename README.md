@@ -84,5 +84,5 @@ For now, you can run it from the source. More installation methods coming soon.
 
 # Oi! Need Help!
 
-The wallpaper change feature only works for windows since changing wallpaper is different accross different platforms. It will be a great help if you can help me up with `GNU\Linux` and `MacOS` integration. Check [CONTRIBUTING.md]() for further help. Thanks!
+The wallpaper change feature only works for windows since changing wallpaper is different accross different platforms. It will be a great help if you can help me up with `GNU\Linux` and `MacOS` integration. Check [CONTRIBUTING.md](https://github.com/Muhimen123/tapetti/blob/main/CONTRIBUTING.md) for further help. Thanks!
 
