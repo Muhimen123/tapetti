@@ -59,7 +59,7 @@ For now, you can run it from the source. More installation methods coming soon.
     First, clone the repository.
 
     ```
-    https://github.com/Muhimen123/tapetti.git
+    git clone https://github.com/Muhimen123/tapetti.git
     ```
 
     Navigate to the directory.
