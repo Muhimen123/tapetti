@@ -39,7 +39,7 @@ def save_image():
         else:
             link = input("Please enter download link: ")
 
-        path = os.getcwd() + "\\data\\images\\"
+        path = os.path.join(os.getcwd(), "data", "images")
         downloader.download_image(link, path, "current_desktop_wallpaper.png")
         wallpaper_path = path + "current_desktop_wallpaper.png"
     
@@ -60,16 +60,16 @@ def save_image():
         answer = prompt(questions)['path_type']
         
         if answer == "Default Path":
-            path = os.getcwd() + "\\data\\images\\"
+            path = os.path.join(os.getcwd(), "data", "images")
         elif answer == "Relative Path":
             path = input("Relative path(dont' include the file name): ")
-            path = os.getcwd() + "\\" + path + "\\"
+            path = os.path.join(os.getcwd(), path)
         else:
-            path = input("Absolute path(don't include the file name): ") + "\\"
+            path = input("Absolute path(don't include the file name): ")
 
         while True:
             file_name = input("File name(include the extension): ")
-            wallpaper_path = path + file_name
+            wallpaper_path = os.path.join(path, file_name)
 
             if os.path.isfile(wallpaper_path):
                 break
@@ -122,8 +122,19 @@ def change_mac_wallpaper(wallpaper_path):
     print("Oops, MacOS not yet supported")
     return 0
 
+def get_linux_desktop_environment():
+    return os.environ.get("XDG_CURRENT_DESKTOP")
 
 def change_linux_wallpaper(wallpaper_path):
-    print("Oops, GNU/Linux not yet supported")
-    return 0
+    
+    de = get_linux_desktop_environment()
+
+    if de and "gnome" in de:
+        os.system(f"gsettings set org.gnome.desktop.background picture-uri file://{wallpaper_path}")
+        return True
+    else:
+        print(f"Did not recognise DE, defaulting to using `feh` to set wallpaper")
+        os.system(f"feh --bg-scale {wallpaper_path}")
+        return True
+
 
