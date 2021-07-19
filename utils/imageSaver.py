@@ -1,6 +1,7 @@
 import os
 import ctypes
 import platform
+from pathlib import Path
 from utils import downloader
 from PyInquirer import prompt
 from colorama import Fore, Style
@@ -96,7 +97,25 @@ def save_image():
 
 
 def change_windows_wallpaper(wallpaper_path):
-    is_changed = ctypes.windll.user32.SystemParametersInfoW(20, 0, wallpaper_path, 0)
+    is_changed = ctypes.windll.user32.SystemParametersInfoW(20, 0, wallpaper_path, 3)
+   
+    # Windows resets back to old wallpaper everytime pc reboots.
+    # This portion of code aims to solve it by changing the main
+    # wallpaper from the root path. 
+
+    home = str(Path.home())
+
+    with open(wallpaper_path, "rb") as file:
+        wallpaper_image = file.read()
+
+        windows_wallpaper_path = home + "\\AppData\\Roaming\\Microsoft\\Windows\\Themes\\TranscodedWallpaper"
+        if os.path.isfile(windows_wallpaper_path):
+            with open(windows_wallpaper_path, "wb") as img_file:
+                img_file.write(wallpaper_image)
+        else:
+            print("Changed wallpaper temporarily. Might get changed when pc reboots")
+            # TODO: Create a fix for this
+
     return is_changed
 
 def change_mac_wallpaper(wallpaper_path):
