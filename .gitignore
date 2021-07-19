@@ -140,6 +140,3 @@ cython_debug/
 # Pycharm
 .idea
 
-# Image files
-**/*.png
-
