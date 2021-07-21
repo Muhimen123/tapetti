@@ -1,17 +1,15 @@
 import requests
-from rich import box
-from rich.table import Table
-from rich.console import Console
-from colorama import Fore, Style 
+from colorama import Fore
 
 from utils.imageBrowser import generate_table
+
 
 def search_image():
     """
     Search for images that contains the given tag
     and output a 'rich' table upon completion
     """
-    
+
     image_data_url = "https://raw.githubusercontent.com/Muhimen123/TID/main/image_data.json"
     tag = input("Please enter a tag: ")
 
@@ -27,7 +25,7 @@ def search_image():
         print(Fore.RED + "Perhaps you are not connected to the internet.")
 
 
-def filter_result_by_tag(image_data: list, tag: str) -> list: 
+def filter_result_by_tag(image_data: list, tag: str) -> list:
     """
     filters the search result by the given tag
     :param image_data: list of dict. the raw data from TID repo
@@ -35,7 +33,7 @@ def filter_result_by_tag(image_data: list, tag: str) -> list:
     :return: list of dict. filtered dict 
     """
 
-    filtered_result = [] 
+    filtered_result = []
 
     for image in image_data:
         tags = image["tags"]
@@ -43,4 +41,3 @@ def filter_result_by_tag(image_data: list, tag: str) -> list:
             filtered_result.append(image)
 
     return filtered_result
-

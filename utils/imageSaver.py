@@ -9,13 +9,12 @@ from utils.imageViewer import tid_repo_prompt
 
 
 def save_image():
-
     """
     sets the image as the desktop wallpaper
     If a link is given then first download the image
     :param path: Absolute or relative path to the file
     """
-    
+
     questions = [
         {
             "type": "list",
@@ -42,7 +41,7 @@ def save_image():
         path = os.path.join(os.getcwd(), "data", "images")
         downloader.download_image(link, path, "current_desktop_wallpaper.png")
         wallpaper_path = path + "current_desktop_wallpaper.png"
-    
+
     else:
         questions = [
             {
@@ -58,7 +57,7 @@ def save_image():
         ]
 
         answer = prompt(questions)['path_type']
-        
+
         if answer == "Default Path":
             path = os.path.join(os.getcwd(), "data", "images")
         elif answer == "Relative Path":
@@ -75,9 +74,9 @@ def save_image():
                 break
             else:
                 print(Fore.RED + f"No file found in path {path}" + Fore.BLUE)
-    
+
     system_os = platform.system()
-    
+
     if system_os == "Windows":
         is_changed = change_windows_wallpaper(wallpaper_path)
     elif system_os == "Darwin":
@@ -98,7 +97,7 @@ def save_image():
 
 def change_windows_wallpaper(wallpaper_path):
     is_changed = ctypes.windll.user32.SystemParametersInfoW(20, 0, wallpaper_path, 3)
-   
+
     # Windows resets back to old wallpaper everytime pc reboots.
     # This portion of code aims to solve it by changing the main
     # wallpaper from the root path. 
@@ -118,15 +117,17 @@ def change_windows_wallpaper(wallpaper_path):
 
     return is_changed
 
+
 def change_mac_wallpaper(wallpaper_path):
     print("Oops, MacOS not yet supported")
     return 0
 
+
 def get_linux_desktop_environment():
     return os.environ.get("XDG_CURRENT_DESKTOP")
 
+
 def change_linux_wallpaper(wallpaper_path):
-    
     de = get_linux_desktop_environment()
 
     if de and "gnome" in de:
@@ -136,5 +137,3 @@ def change_linux_wallpaper(wallpaper_path):
         print(f"Did not recognise DE, defaulting to using `feh` to set wallpaper")
         os.system(f"feh --bg-scale {wallpaper_path}")
         return True
-
-

@@ -6,7 +6,6 @@ from colorama import Fore, Style
 
 
 def browser_image(start: int = 0, limit: int = 15):
-
     """
     Browse all the wallpapers in the github repo
     and output a 'rich' table upon completion
@@ -18,26 +17,27 @@ def browser_image(start: int = 0, limit: int = 15):
 
     try:
         response = requests.get(image_data_url)
-        if response.status_code == 200:
-            generate_table(response.json()) 
+        if response.ok:
+            generate_table(response.json())
         else:
             print(Fore.RED + f"Oops, something went wrong {response.status_code}" + Style.RESET_ALL)
+
     except Exception as error:
         print(Fore.RED + "Turns out you are not connected to the internet" + Style.RESET_ALL)
 
 
 def generate_table(image_data: list):
-
     """
     Create and print a python rich table
     :param image_data: list of dicts containing information about images
     """
 
-    image_data_table = Table(show_header=True,
-            header_style="bold green",
-            box=box.ROUNDED,
-            show_lines=True
-            )
+    image_data_table = Table(
+        show_header=True,
+        header_style="bold green",
+        box=box.ROUNDED,
+        show_lines=True
+    )
 
     image_data_table.add_column("No.")
     image_data_table.add_column("Name")
@@ -48,13 +48,13 @@ def generate_table(image_data: list):
     image_data_table.add_column("Color")
 
     for idx, image in enumerate(image_data):
-        no = str(idx+1)
+        no = str(idx + 1)
         name = image["image_name"]
         file_type = image["file_type"]
         height = image["height"]
         width = image["width"]
         resolution = f"{width}x{height}"
-        orientation = "Horizontal" if width > height else "Vertical"        
+        orientation = "Horizontal" if width > height else "Vertical"
         theme = image["theme"]
         color = " ".join(image["color"][:min(len(image["color"]), 3)])
 
@@ -62,5 +62,3 @@ def generate_table(image_data: list):
 
     console = Console()
     console.print(image_data_table)
-
-
