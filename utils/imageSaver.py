@@ -60,35 +60,45 @@ def save_image():
 
         if answer == "Default Path":
             path = os.path.join(os.getcwd(), "data", "images")
+
         elif answer == "Relative Path":
-            path = input("Relative path(dont' include the file name): ")
-            path = os.path.join(os.getcwd(), path)
+            path = os.path.join(
+                os.getcwd(),
+                input("Relative path(dont' include the file name): ")
+            )
+
         else:
             path = input("Absolute path(don't include the file name): ")
 
         while True:
-            file_name = input("File name(include the extension): ")
-            wallpaper_path = os.path.join(path, file_name)
+            wallpaper_path = os.path.join(
+                path,
+                input("File name(include the extension): ")
+            )
 
             if os.path.isfile(wallpaper_path):
                 break
-            else:
-                print(Fore.RED + f"No file found in path {path}" + Fore.BLUE)
+
+            print(Fore.RED + f"No file found in path {path}" + Fore.BLUE)
 
     system_os = platform.system()
 
     if system_os == "Windows":
         is_changed = change_windows_wallpaper(wallpaper_path)
+
     elif system_os == "Darwin":
         is_changed = change_mac_wallpaper(wallpaper_path)
+
     elif system_os == "Linux":
         is_changed = change_linux_wallpaper(wallpaper_path)
+
     else:
         print(Fore.RED + "Sorry, couldn't detect OS.")
         is_changed = 0
 
     if is_changed:
         print(Fore.GREEN + "Changed the wallpaper")
+
     else:
         print(Fore.RED + "Couldn't change the wallpaper")
 
@@ -102,12 +112,10 @@ def change_windows_wallpaper(wallpaper_path):
     # This portion of code aims to solve it by changing the main
     # wallpaper from the root path. 
 
-    home = str(Path.home())
-
     with open(wallpaper_path, "rb") as file:
         wallpaper_image = file.read()
 
-        windows_wallpaper_path = home + "\\AppData\\Roaming\\Microsoft\\Windows\\Themes\\TranscodedWallpaper"
+        windows_wallpaper_path = f"{Path.home()}\\AppData\\Roaming\\Microsoft\\Windows\\Themes\\TranscodedWallpaper"
         if os.path.isfile(windows_wallpaper_path):
             with open(windows_wallpaper_path, "wb") as img_file:
                 img_file.write(wallpaper_image)
@@ -120,7 +128,7 @@ def change_windows_wallpaper(wallpaper_path):
 
 def change_mac_wallpaper(wallpaper_path):
     print("Oops, MacOS not yet supported")
-    return 0
+    return False
 
 
 def get_linux_desktop_environment():
@@ -133,7 +141,7 @@ def change_linux_wallpaper(wallpaper_path):
     if de and "gnome" in de:
         os.system(f"gsettings set org.gnome.desktop.background picture-uri file://{wallpaper_path}")
         return True
-    else:
-        print(f"Did not recognise DE, defaulting to using `feh` to set wallpaper")
-        os.system(f"feh --bg-scale {wallpaper_path}")
-        return True
+
+    print(f"Did not recognise DE, defaulting to using `feh` to set wallpaper")
+    os.system(f"feh --bg-scale {wallpaper_path}")
+    return True

@@ -36,11 +36,10 @@ def image_viewer():
     else:
         link = input("Please enter download link: ")
 
-    path = os.getcwd() + "\\data\\images\\"
-    downloader.download_image(link, path, "tmp_wallpaper_preview_image.png")
+    path = f"{os.getcwd()}\\data\\images\\"
 
-    img = Image.open(path + "tmp_wallpaper_preview_image.png")
-    img.show()
+    downloader.download_image(link, path, "tmp_wallpaper_preview_image.png")
+    Image.open(path + "tmp_wallpaper_preview_image.png").show()
 
 
 def tid_repo_prompt(image_data_url: str):
@@ -52,29 +51,24 @@ def tid_repo_prompt(image_data_url: str):
     """
 
     entry_number = int(input("Please enter image number: ")) - 1
-    link = None
 
     try:
         response = requests.get(image_data_url)
 
-        if response.status_code == 200:
-            image_data = response.json()
-            if entry_number >= len(image_data):
-                entry_number = 1
-
-            file_name = image_data[entry_number]["image_name"]
-            file_type = image_data[entry_number]["file_type"]
-            base_url = "https://raw.githubusercontent.com/Muhimen123/TID/main/images/"
-            link = base_url + file_name + "." + file_type
-
-            return link
-
-        else:
+        if not response.ok:
             print(Fore.RED + f"Oops, something went wrong {response.status_code}" + Style.RESEST_ALL)
+            return
+
+        image_data = response.json()
+        if entry_number >= len(image_data):
+            entry_number = 1
+
+        file_name = image_data[entry_number]["image_name"]
+        file_type = image_data[entry_number]["file_type"]
+        return f"https://raw.githubusercontent.com/Muhimen123/TID/main/images/{file_name}.{file_type}"
 
     except Exception as error:
         print(error)
         print(Fore.RED + "Perhaps you are not connected to the internet. Mind checking it again?" + Style.RESEST_ALL)
     
     return link
-
