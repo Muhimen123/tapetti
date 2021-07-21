@@ -5,27 +5,24 @@ from utils import imageBrowser
 from utils import imageSearch
 from utils import helpMessage
 
+actions = {
+    "view": imageViewer.image_viewer,
+    "download": downloader.download_image,
+    "save": imageSaver.save_image,
+    "browse": imageBrowser.browser_image,
+    "search": imageSearch.search_image,
+    "help": helpMessage.help_message
+}
+
 
 def command_controller(command: list):
     """
     Route to the correct command and fire the function
     :param command:
     """
+    action = actions.get(command[1].lower())
 
-    if "view".upper() in command[1].upper():
-        imageViewer.image_viewer()
+    if not callable(action):
+        return
 
-    elif "download".upper() in command[1].upper():
-        downloader.download_image()
-
-    elif "save".upper() in command[1].upper():
-        imageSaver.save_image()
-
-    elif "browse".upper() in command[1].upper():
-        imageBrowser.browser_image()
-
-    elif "search".upper() in command[1].upper():
-        imageSearch.search_image()
-
-    elif "help".upper() in command[1].upper():
-        helpMessage.help_message()
+    action()
