@@ -1,11 +1,10 @@
 import sys
-import os
+
 from PyInquirer import prompt
+
 from utils import commandController
 
-
-arguments = sys.argv
-if len(arguments) < 2:
+if len(sys.argv) < 2:
     questions = [
         {
             "type": "list",
@@ -22,7 +21,6 @@ if len(arguments) < 2:
         }
     ]
 
-    answer = prompt(questions)["command"]
-    arguments.append(answer)
+    sys.argv.append(prompt(questions)["command"])
 
-commandController.command_controller(arguments)
+commandController.command_controller(sys.argv)
