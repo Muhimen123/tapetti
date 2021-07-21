@@ -1,23 +1,25 @@
+from typing import List
+
 import requests
 from colorama import Fore
 
 from utils.imageBrowser import generate_table
 
 
-def search_image():
+def search_image() -> None:
     """
     Search for images that contains the given tag
     and output a 'rich' table upon completion
     """
 
-    image_data_url = "https://raw.githubusercontent.com/Muhimen123/TID/main/image_data.json"
-    tag = input("Please enter a tag: ")
+    image_data_url: str = "https://raw.githubusercontent.com/Muhimen123/TID/main/image_data.json"
+    tag: str = input("Please enter a tag: ")
 
     try:
-        response = requests.get(image_data_url)
+        response: requests.Response = requests.get(image_data_url)
 
         if response.ok:
-            filtered_result = filter_result_by_tag(response.json(), tag)
+            filtered_result: List = filter_result_by_tag(response.json(), tag)
             generate_table(filtered_result)
 
         else:
@@ -28,7 +30,7 @@ def search_image():
         print(Fore.RED + "Perhaps you are not connected to the internet.")
 
 
-def filter_result_by_tag(image_data: list, tag: str) -> list:
+def filter_result_by_tag(image_data: list, tag: str) -> List:
     """
     filters the search result by the given tag
     :param image_data: list of dict. the raw data from TID repo
