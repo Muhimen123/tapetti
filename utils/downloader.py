@@ -6,7 +6,6 @@ from colorama import Fore, Back, Style
 
 
 def download_image(link: str = None, path: str = None, file_name: str = None):
-
     """
     Download the given image in the given path
     :param link: Link to download the image
@@ -22,7 +21,6 @@ def download_image(link: str = None, path: str = None, file_name: str = None):
 
     except Exception as error:
         print(error)
-        pass
         # TODO: Show proper error message
 
 
@@ -39,21 +37,19 @@ def download_content(link: str, path: str, file_name: str):
         chunk_size = 1024
         image_content = res.iter_content(chunk_size)
 
-        with Progress() as progress:
-            download_task = progress.add_task(f"[green] {file_name}", total=image_size)
+    with Progress() as progress:
+        download_task = progress.add_task(f"[green] {file_name}", total=image_size)
 
-            full_path = path + file_name
-            with open(full_path, "wb") as image_file:
-                for chunk in image_content:
-                    image_file.write(chunk)
-                    progress.update(download_task, advance=len(chunk))
+        with open(path + file_name, "wb") as image_file:
+            for chunk in image_content:
+                image_file.write(chunk)
+                progress.update(download_task, advance=len(chunk))
 
-            while not progress.finished:
-                progress.update(task, advance=chunk_size)
+        while not progress.finished:
+            progress.update(task, advance=chunk_size)
 
 
 def download_prompt():
-
     """
     Show a prompt to gather necessary data
     :return: link, path, file_name
@@ -76,20 +72,21 @@ def download_prompt():
     answer = prompt(questions)['path_type']
 
     if answer == "Default Path":
-        path = os.getcwd() + "\\data\\images\\"
+        path = f"{os.getcwd()}\\data\\images\\"
+
     elif answer == "Relative Path":
         path = input("Download path: ")
-        path = os.getcwd() + "\\" + path + "\\"
+        path = f"{os.getcwd()}\\{path}\\"
+
     else:
         path = input("Download path: ") + "\\"
 
     while True:
         file_name = input("File name(include extension): ")
 
-        if os.path.isfile(path + '\\' + file_name):
+        if os.path.isfile(f"{path}\\{file_name}"):
             print(Fore.RED + "A file with the name already exists. Please enter another one." + Style.RESET_ALL)
         else:
             break
 
     return link, path, file_name
-

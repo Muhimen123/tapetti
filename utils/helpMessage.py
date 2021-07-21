@@ -9,12 +9,12 @@ def help_message():
         help_messages = json.load(file)
 
     table = Table(
-            title="Available Commands",
-            show_header=True,
-            header_style="bold green",
-            box=box.ROUNDED,
-            show_lines=True
-            )
+        title="Available Commands",
+        show_header=True,
+        header_style="bold green",
+        box=box.ROUNDED,
+        show_lines=True
+    )
 
     table.add_column("command")
     table.add_column("description")
@@ -24,9 +24,8 @@ def help_message():
         table.add_row(
             command["command_name"],
             command["description"],
-            ", ".join([str(i) for i in command["requirements"]])
-            )
+            ", ".join(map(str, command["requirements"]))
+        )
 
     console = Console()
     console.print(table)
-
