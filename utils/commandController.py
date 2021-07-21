@@ -1,3 +1,5 @@
+from typing import Dict, Callable, Any, Optional, List
+
 from utils import imageViewer
 from utils import downloader
 from utils import imageSaver
@@ -5,7 +7,9 @@ from utils import imageBrowser
 from utils import imageSearch
 from utils import helpMessage
 
-actions = {
+Action = Callable[[], Any]
+
+actions: Dict[str, Action] = {
     "view": imageViewer.image_viewer,
     "download": downloader.download_image,
     "save": imageSaver.save_image,
@@ -15,12 +19,12 @@ actions = {
 }
 
 
-def command_controller(command: list):
+def command_controller(command: List[str]) -> None:
     """
     Route to the correct command and fire the function
     :param command:
     """
-    action = actions.get(command[1].lower())
+    action: Action = actions.get(command[1].lower())
 
     if not callable(action):
         return

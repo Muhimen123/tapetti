@@ -1,14 +1,16 @@
 import json
+from typing import Dict, Union, List, Optional
+
 from rich import box
 from rich.table import Table
 from rich.console import Console
 
 
-def help_message():
+def help_message() -> None:
     with open('data/help_messages.json') as file:
-        help_messages = json.load(file)
+        help_messages: List[Dict[str, Union[str, List[Optional[str]]]]] = json.load(file)
 
-    table = Table(
+    table: Table = Table(
         title="Available Commands",
         show_header=True,
         header_style="bold green",
@@ -27,5 +29,5 @@ def help_message():
             ", ".join(map(str, command["requirements"]))
         )
 
-    console = Console()
+    console: Console = Console()
     console.print(table)
