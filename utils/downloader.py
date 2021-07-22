@@ -7,6 +7,20 @@ from colorama import Fore, Style
 from rich.progress import Progress, TaskID
 
 
+QUESTIONS: List[Dict[str, Union[str, List[str]]]] = [
+        {
+            "type": "list",
+            "name": "path_type",
+            "message": "Choose path type: ",
+            "choices": [
+                "Default Path",
+                "Absolute Path",
+                "Relative Path"
+            ]
+        }
+    ]
+
+
 def download_image(
         link: Optional[str] = None,
         path: Optional[str] = None,
@@ -47,7 +61,7 @@ def download_with_progress(res, path: str, file_name: str) -> None:
     chunk_size: int = 1024
     image_content: Iterator = res.iter_content(chunk_size)
 
-    file_path = path + file_name
+    file_path: str = path + file_name
 
     with Progress() as progress:
         download_task: TaskID = progress.add_task(f"[green] {file_name}", total=image_size)
@@ -58,7 +72,12 @@ def download_with_progress(res, path: str, file_name: str) -> None:
             progress.update(download_task, advance=chunk_size)
 
 
-def save_image_content(file_path: str, image_content, progress, download_task) -> None:
+def save_image_content(
+        file_path: str,
+        image_content: Iterator,
+        progress: Progress,
+        download_task: TaskID
+) -> None:
     with open(file_path, "wb") as image_file:
         for chunk in image_content:
             image_file.write(chunk)
@@ -71,21 +90,8 @@ def download_prompt() -> Tuple[str, str, str]:
     Show a prompt to gather necessary data
     :return: link, path, file_name
     """
-    questions: List[Dict[str, Union[str, List[str]]]] = [
-        {
-            "type": "list",
-            "name": "path_type",
-            "message": "Choose path type: ",
-            "choices": [
-                "Default Path",
-                "Absolute Path",
-                "Relative Path"
-            ]
-        }
-    ]
-
     link: str = input("Please enter download link: ")
-    answer: Dict = prompt(questions)['path_type']
+    answer: Dict = prompt(QUESTIONS)['path_type']
 
     if answer == "Default Path":
         path: str = f"{os.getcwd()}\\data\\images\\"
@@ -97,12 +103,21 @@ def download_prompt() -> Tuple[str, str, str]:
     else:
         path: str = input("Download path: ") + "\\"
 
-    while True:
-        file_name: str = input("File name(include extension): ")
+    return link, path, get_new_file_name(path)
 
-        if not os.path.isfile(f"{path}\\{file_name}"):
-            break
 
-        print(Fore.RED + "A file with the name already exists. Please enter another one." + Style.RESET_ALL)
+def get_new_file_name(path: str) -> str:
+    """Ensure the user enter a new file_name."""
+    text: str = "File name(include extension): "
+    file_name: str = input(text)
 
-    return link, path, file_name
+    while not file_name or os.path.isfile(f"{path}\\{file_name}"):
+        print(
+            Fore.RED +
+            "A file with the name already exists or the filename is invalid. Please enter another one."
+            + Style.RESET_ALL
+        )
+
+        file_name: str = input(text)
+
+    return file_name
