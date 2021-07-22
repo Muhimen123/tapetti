@@ -2,6 +2,7 @@ import os
 import ctypes
 import platform
 from pathlib import Path
+import re
 from typing import List, Union, Dict, Optional, AnyStr, Any
 
 from utils import downloader
@@ -131,14 +132,41 @@ def change_mac_wallpaper(wallpaper_path: str) -> bool:
     print("Oops, MacOS not yet supported")
     return False
 
+def read_status_code(process):
+    # Calculate the return value code
+    return_value = int(bin(process).replace("0b", "").rjust(16, '0')[:8], 2)
+    return return_value == 0
 
 def change_linux_wallpaper(wallpaper_path: str) -> bool:
     de: Any = os.environ.get("XDG_CURRENT_DESKTOP")
 
-    if de and "gnome" in de:
-        os.system(f"settings set org.gnome.desktop.background picture-uri file://{wallpaper_path}")
-        return True
+    if de and "gnome" in de.lower():
+        return read_status_code(
+            os.system(f"settings set org.gnome.desktop.background picture-uri file://{wallpaper_path}")
+        )
+
+    if de and "kde" in de.lower():
+        command = """
+                qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript '
+                    var allDesktops = desktops();
+                    print (allDesktops);
+                    for (i=0;i<allDesktops.length;i++) {{
+                        d = allDesktops[i];
+                        d.wallpaperPlugin = "org.kde.image";
+                        d.currentConfigGroup = Array("Wallpaper",
+                                                     "org.kde.image",
+                                                     "General");
+                        d.writeConfig("Image", "file://{}")
+                    }}
+                '
+            """.format(wallpaper_path)
+
+        return read_status_code(
+            os.system(command)
+        )
+        
 
     print(f"Did not recognise DE, defaulting to using `feh` to set wallpaper")
-    os.system(f"feh --bg-scale {wallpaper_path}")
-    return True
+    return read_status_code(
+        os.system(f"feh --bg-scale {wallpaper_path}")
+    )
