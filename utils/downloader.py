@@ -3,8 +3,8 @@ from typing import Optional, Iterator, List, Dict, Union, Tuple
 
 import requests
 from PyInquirer import prompt
+from colorama import Fore, Style
 from rich.progress import Progress, TaskID
-from colorama import Fore, Back, Style
 
 
 def download_image(
@@ -39,20 +39,31 @@ def download_content(link: str, path: str, file_name: str) -> None:
     """
 
     with requests.get(link, stream=True) as res:
-        image_size: int = int(res.headers.get('content-length', 0))
-        chunk_size: int = 1024
-        image_content: Iterator = res.iter_content(chunk_size)
+        download_with_progress(res, path, file_name)
+
+
+def download_with_progress(res, path: str, file_name: str) -> None:
+    image_size: int = int(res.headers.get('content-length', 0))
+    chunk_size: int = 1024
+    image_content: Iterator = res.iter_content(chunk_size)
+
+    file_path = path + file_name
 
     with Progress() as progress:
         download_task: TaskID = progress.add_task(f"[green] {file_name}", total=image_size)
 
-        with open(path + file_name, "wb") as image_file:
-            for chunk in image_content:
-                image_file.write(chunk)
-                progress.update(download_task, advance=len(chunk))
+        save_image_content(file_path, image_content, progress, download_task)
 
         while not progress.finished:
             progress.update(download_task, advance=chunk_size)
+
+
+def save_image_content(file_path: str, image_content, progress, download_task) -> None:
+    with open(file_path, "wb") as image_file:
+        for chunk in image_content:
+            image_file.write(chunk)
+
+            progress.update(download_task, advance=len(chunk))
 
 
 def download_prompt() -> Tuple[str, str, str]:
