@@ -7,7 +7,7 @@ from typing import List, Union, Dict, Optional, AnyStr, Any
 from utils import downloader
 from PyInquirer import prompt
 from colorama import Fore, Style
-from utils.imageViewer import tid_repo_prompt
+from utils.image_viewer import tid_repo_prompt
 
 
 def save_image() -> None:

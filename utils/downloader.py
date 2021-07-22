@@ -52,7 +52,7 @@ def download_content(link: str, path: str, file_name: str) -> None:
                 progress.update(download_task, advance=len(chunk))
 
         while not progress.finished:
-            progress.update(task, advance=chunk_size)
+            progress.update(download_task, advance=chunk_size)
 
 
 def download_prompt() -> Tuple[str, str, str]:

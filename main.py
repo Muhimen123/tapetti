@@ -3,7 +3,7 @@ from typing import List, Dict, Union
 
 from PyInquirer import prompt
 
-from utils import commandController
+from utils import command_controller
 
 QUESTIONS: List[Dict[str, Union[str, List[str]]]] = [
     {
@@ -24,4 +24,4 @@ QUESTIONS: List[Dict[str, Union[str, List[str]]]] = [
 if len(sys.argv) < 2:
     sys.argv.append(prompt(QUESTIONS)["command"])
 
-commandController.command_controller(sys.argv)
+command_controller.command_controller(sys.argv)

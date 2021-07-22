@@ -3,7 +3,7 @@ from typing import List
 import requests
 from colorama import Fore
 
-from utils.imageBrowser import generate_table
+from utils.image_browser import generate_table
 
 
 def search_image() -> None:
