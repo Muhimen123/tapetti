@@ -1,28 +1,27 @@
 import sys
-import os
+from typing import List, Dict, Union
+
 from PyInquirer import prompt
-from utils import commandController
 
+from utils import command_controller
 
-arguments = sys.argv
-if len(arguments) < 2:
-    questions = [
-        {
-            "type": "list",
-            "name": "command",
-            "message": "Choose a command to apply",
-            "choices": [
-                "browse",
-                "download",
-                "help",
-                "save",
-                "search",
-                "view"
-            ]
-        }
-    ]
+QUESTIONS: List[Dict[str, Union[str, List[str]]]] = [
+    {
+        "type": "list",
+        "name": "command",
+        "message": "Choose a command to apply",
+        "choices": [
+            "browse",
+            "download",
+            "help",
+            "save",
+            "search",
+            "view"
+        ]
+    }
+]
 
-    answer = prompt(questions)["command"]
-    arguments.append(answer)
+if len(sys.argv) < 2:
+    sys.argv.append(prompt(QUESTIONS)["command"])
 
-commandController.command_controller(arguments)
+command_controller.command_controller(sys.argv)
