@@ -38,7 +38,7 @@ def save_image() -> None:
 
         path: str = "//" + os.path.join(os.getcwd(), "data", "images")
         downloader.download_image(link, path, "current_desktop_wallpaper.png")
-        wallpaper_path: str = f"{path}current_desktop_wallpaper.png"
+        wallpaper_path: str = f"//{path}current_desktop_wallpaper.png"
 
     else:
         questions: List[Dict[str, Union[List[str], str]]] = [
