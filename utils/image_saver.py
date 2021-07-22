@@ -14,7 +14,6 @@ def save_image() -> None:
     """
     sets the image as the desktop wallpaper
     If a link is given then first download the image
-    :param path: Absolute or relative path to the file
     """
 
     questions: List[Dict[str, Union[List[str], str]]] = [
@@ -37,7 +36,7 @@ def save_image() -> None:
             "https://raw.githubusercontent.com/Muhimen123/TID/main/image_data.json"
         ) if answer == 'TID Repo' else input("Please enter download link: ")
 
-        path: str = os.path.join(os.getcwd(), "data", "images")
+        path: str = "//" + os.path.join(os.getcwd(), "data", "images")
         downloader.download_image(link, path, "current_desktop_wallpaper.png")
         wallpaper_path: str = f"{path}current_desktop_wallpaper.png"
 

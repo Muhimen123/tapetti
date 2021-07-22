@@ -3,7 +3,7 @@ from typing import Dict, Callable, Any, List
 from utils import downloader
 from utils import help_message
 from utils import image_browser
-from utils import image_save
+from utils import image_saver
 from utils import image_search
 from utils import image_viewer
 
@@ -12,7 +12,7 @@ Action = Callable[[], Any]
 actions: Dict[str, Action] = {
     "view": image_viewer.image_viewer,
     "download": downloader.download_image,
-    "save": image_save.save_image,
+    "save": image_saver.save_image,
     "browse": image_browser.browser_image,
     "search": image_search.search_image,
     "help": help_message.help_message
