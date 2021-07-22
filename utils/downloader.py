@@ -61,7 +61,7 @@ def download_with_progress(res, path: str, file_name: str) -> None:
     chunk_size: int = 1024
     image_content: Iterator = res.iter_content(chunk_size)
 
-    file_path: str = path + file_name
+    file_path: str = os.path.join(path, file_name)
 
     with Progress() as progress:
         download_task: TaskID = progress.add_task(f"[green] {file_name}", total=image_size)
