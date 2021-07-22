@@ -136,7 +136,7 @@ def change_linux_wallpaper(wallpaper_path: str) -> bool:
     de: Any = os.environ.get("XDG_CURRENT_DESKTOP")
 
     if de and "gnome" in de:
-        os.system(f"gsettings set org.gnome.desktop.background picture-uri file://{wallpaper_path}")
+        os.system(f"settings set org.gnome.desktop.background picture-uri file://{wallpaper_path}")
         return True
 
     print(f"Did not recognise DE, defaulting to using `feh` to set wallpaper")
