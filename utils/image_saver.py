@@ -1,6 +1,7 @@
 import os
 import ctypes
 import platform
+import subprocess
 from pathlib import Path
 import re
 from typing import List, Union, Dict, Optional, AnyStr, Any
@@ -39,6 +40,7 @@ def save_image() -> None:
 
         path: str = os.path.join(os.getcwd(), "data", "images")
         downloader.download_image(link, path, "current_desktop_wallpaper.png")
+
         wallpaper_path: str = os.path.join(path, "current_desktop_wallpaper.png")
 
     else:
@@ -165,6 +167,22 @@ def change_linux_wallpaper(wallpaper_path: str) -> bool:
             os.system(command)
         )
         
+
+    elif de and "XFCE" in de:
+        properties = subprocess.Popen("xfconf-query -c xfce4-desktop -l", shell=True, stdout=subprocess.PIPE) 
+        properties = properties.stdout.read().decode("utf-8").split('\n')
+        monitors = list()
+        
+        for monitor in properties:
+            if "last-image" in monitor:
+                monitors.append(monitor)
+            
+        for monitor in monitors:
+            command = f"xfconf-query -c xfce4-desktop -p {monitor} -s {wallpaper_path}"
+            result = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
+            print(result)
+        return True
+
 
     print(f"Did not recognise DE, defaulting to using `feh` to set wallpaper")
     return read_status_code(
