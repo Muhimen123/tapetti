@@ -140,3 +140,5 @@ cython_debug/
 # Pycharm
 .idea
 
+# image data
+data/images/*

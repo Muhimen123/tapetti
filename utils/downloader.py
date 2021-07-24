@@ -36,6 +36,9 @@ def download_image(
     if link is None:
         link, path, file_name = download_prompt()
 
+    if not os.path.exists(path):
+        os.mkdir(path)
+
     try:
         download_content(link, path, file_name)
 
@@ -94,14 +97,14 @@ def download_prompt() -> Tuple[str, str, str]:
     answer: Dict = prompt(QUESTIONS)['path_type']
 
     if answer == "Default Path":
-        path: str = f"{os.getcwd()}\\data\\images\\"
+        path: str = os.path.join(os.getcwd(), "data", "images")
 
     elif answer == "Relative Path":
         path: str = input("Download path: ")
-        path: str = f"{os.getcwd()}\\{path}\\"
+        path: str = os.path.join(os.getcwd(), path)
 
     else:
-        path: str = input("Download path: ") + "\\"
+        path: str = input("Download path: ") + os.path.pathsep
 
     return link, path, get_new_file_name(path)
 
@@ -111,7 +114,7 @@ def get_new_file_name(path: str) -> str:
     text: str = "File name(include extension): "
     file_name: str = input(text)
 
-    while not file_name or os.path.isfile(f"{path}\\{file_name}"):
+    while not file_name or os.path.isfile(os.path.join(path, file_name)):
         print(
             Fore.RED +
             "A file with the name already exists or the filename is invalid. Please enter another one."
