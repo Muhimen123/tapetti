@@ -36,6 +36,9 @@ def download_image(
     if link is None:
         link, path, file_name = download_prompt()
 
+    if not os.path.exists(path):
+        os.mkdir(path)
+
     try:
         download_content(link, path, file_name)
 

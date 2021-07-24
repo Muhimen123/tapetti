@@ -39,10 +39,6 @@ def save_image() -> None:
         ) if answer == 'TID Repo' else input("Please enter download link: ")
 
         path: str = os.path.join(os.getcwd(), "data", "images")
-    
-        if not os.path.exists(path):
-            os.mkdir(path)
-
         downloader.download_image(link, path, "current_desktop_wallpaper.png")
 
         wallpaper_path: str = os.path.join(path, "current_desktop_wallpaper.png")
@@ -184,7 +180,6 @@ def change_linux_wallpaper(wallpaper_path: str) -> bool:
         for monitor in monitors:
             command = f"xfconf-query -c xfce4-desktop -p {monitor} -s {wallpaper_path}"
             result = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
-            print(result)
         return True
 
 
