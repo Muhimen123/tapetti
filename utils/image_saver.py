@@ -39,6 +39,10 @@ def save_image() -> None:
         ) if answer == 'TID Repo' else input("Please enter download link: ")
 
         path: str = os.path.join(os.getcwd(), "data", "images")
+    
+        if not os.path.exists(path):
+            os.mkdir(path)
+
         downloader.download_image(link, path, "current_desktop_wallpaper.png")
 
         wallpaper_path: str = os.path.join(path, "current_desktop_wallpaper.png")
@@ -144,7 +148,7 @@ def change_linux_wallpaper(wallpaper_path: str) -> bool:
 
     if de and "gnome" in de.lower():
         return read_status_code(
-            os.system(f"settings set org.gnome.desktop.background picture-uri file://{wallpaper_path}")
+            os.system(f"gsettings set org.gnome.desktop.background picture-uri file://{wallpaper_path}")
         )
 
     if de and "kde" in de.lower():
@@ -168,7 +172,7 @@ def change_linux_wallpaper(wallpaper_path: str) -> bool:
         )
         
 
-    elif de and "XFCE" in de:
+    elif de and "xfce" in de.lower():
         properties = subprocess.Popen("xfconf-query -c xfce4-desktop -l", shell=True, stdout=subprocess.PIPE) 
         properties = properties.stdout.read().decode("utf-8").split('\n')
         monitors = list()
