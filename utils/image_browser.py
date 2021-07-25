@@ -1,9 +1,8 @@
 import requests
 from rich import box
+from rich import print
 from rich.table import Table
 from rich.console import Console
-from colorama import Fore, Style
-
 
 
 def browser_image(start: int = 0, limit: int = 15) -> None:
@@ -23,10 +22,10 @@ def browser_image(start: int = 0, limit: int = 15) -> None:
             generate_table(response.json())
 
         else:
-            print(Fore.RED + f"Oops, something went wrong {response.status_code}" + Style.RESET_ALL)
+            print(f"[red]Oops, something went wrong {response.status_code}")
 
     except Exception as error:
-        print(Fore.RED + "Turns out you are not connected to the internet" + Style.RESET_ALL)
+        print("[red]Turns out you are not connected to the internet")
 
 
 def generate_table(image_data: list) -> None:

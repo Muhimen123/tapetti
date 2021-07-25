@@ -1,7 +1,7 @@
 from typing import List
 
 import requests
-from colorama import Fore
+from rich import print
 
 from utils.image_browser import generate_table
 
@@ -23,11 +23,10 @@ def search_image() -> None:
             generate_table(filtered_result)
 
         else:
-            print(Fore.RED + "Oops, something went wrong. {response.status_code}")
+            print("[red]Oops, something went wrong. {response.status_code}")
 
     except Exception as error:
-        print(error)
-        print(Fore.RED + "Perhaps you are not connected to the internet.")
+        print("[red]Perhaps you are not connected to the internet.")
 
 
 def filter_result_by_tag(image_data: list, tag: str) -> List:

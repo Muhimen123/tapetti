@@ -3,10 +3,9 @@ from typing import List, Union, Dict, Optional, Any
 
 import requests
 from PIL import Image
+from rich import print
 from utils import downloader
 from PyInquirer import prompt
-from colorama import Fore, Style
-
 
 
 def image_viewer() -> None:
@@ -59,11 +58,11 @@ def tid_repo_prompt(image_data_url: str):
         response: requests.Response = requests.get(image_data_url)
 
     except Exception as error:
-        print(Fore.RED + "Perhaps you are not connected to the internet. Mind checking it again?" + Style.RESEST_ALL)
+        print("[red]Perhaps you are not connected to the internet. Mind checking it again?")
 
     else:
         if not response.ok:
-            print(Fore.RED + f"Oops, something went wrong {response.status_code}" + Style.RESEST_ALL)
+            print(f"[red]Oops, something went wrong {response.status_code}")
             return
 
         image_data: Any = response.json()

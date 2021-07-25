@@ -5,6 +5,7 @@ from PyInquirer import prompt
 
 from utils import command_controller
 
+
 QUESTIONS: List[Dict[str, Union[str, List[str]]]] = [
     {
         "type": "list",

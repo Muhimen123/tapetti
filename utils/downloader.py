@@ -2,8 +2,8 @@ import os
 from typing import Optional, Iterator, List, Dict, Union, Tuple
 
 import requests
+from rich import print
 from PyInquirer import prompt
-from colorama import Fore, Style
 from rich.progress import Progress, TaskID
 
 
@@ -115,9 +115,7 @@ def get_new_file_name(path: str) -> str:
 
     while not file_name or os.path.isfile(os.path.join(path, file_name)):
         print(
-            Fore.RED +
-            "A file with the name already exists or the filename is invalid. Please enter another one."
-            + Style.RESET_ALL
+            "[red]A file with the name already exists or the filename is invalid. Please enter another one."
         )
 
         file_name: str = input(text)

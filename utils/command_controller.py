@@ -8,7 +8,6 @@ from utils import image_search
 from utils import image_viewer
 
 
-
 Action = Callable[[], Any]
 
 actions: Dict[str, Action] = {

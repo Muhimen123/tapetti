@@ -8,9 +8,8 @@ from typing import List, Union, Dict, Optional, AnyStr, Any
 
 from utils import downloader
 from PyInquirer import prompt
-from colorama import Fore, Style
+from rich import print
 from utils.image_viewer import tid_repo_prompt
-
 
 
 def save_image() -> None:
@@ -80,7 +79,7 @@ def save_image() -> None:
             if os.path.isfile(wallpaper_path):
                 break
 
-            print(Fore.RED + f"No file found in path {path}" + Fore.BLUE)
+            print(f"[red]No file found in path {path}")
 
     system_os: str = platform.system()
 
@@ -94,17 +93,12 @@ def save_image() -> None:
         is_changed: bool = change_linux_wallpaper(wallpaper_path)
 
     else:
-        print(Fore.RED + "Sorry, couldn't detect OS." + Style.RESET_ALL)
+        print("[red]Sorry, couldn't detect OS.")
         is_changed: bool = False
 
-    print(
-        (
-            f"{Fore.GREEN}Changed the wallpaper"
-            if is_changed else
-            f"{Fore.RED}Couldn't change the wallpaper"
-        ),
-        Style.RESET_ALL
-    )
+    message: str = "[green]Changed wallpaper" if is_changed else "[red]Couldn't change wallpaper"
+
+    print(message)
 
 
 def change_windows_wallpaper(wallpaper_path: str) -> bool:
@@ -117,9 +111,7 @@ def change_windows_wallpaper(wallpaper_path: str) -> bool:
     with open(wallpaper_path, "rb") as file:
         wallpaper_image: AnyStr = file.read()
 
-        #suffix_path: str = "\\AppData\\Roaming\\Microsoft\\Windows\\Themes\\TranscodedWallpaper"
         suffix_path: str = os.path.join("Appdata", "Roaming", "Microsoft", "Windows", "Themes", "TranscodedWallpaper")
-        #windows_wallpaper_path: str = f"{Path.home()}{suffix_path}"
         windows_wallpaper_path: str = os.path.join(Path.home(), suffix_path)
 
         if os.path.isfile(windows_wallpaper_path):
@@ -127,14 +119,14 @@ def change_windows_wallpaper(wallpaper_path: str) -> bool:
                 img_file.write(wallpaper_image)
 
         else:
-            print("Changed wallpaper temporarily. Might get changed when pc reboots")
+            print("[yellow]Changed wallpaper temporarily. Might get changed when pc reboots")
             # TODO: Create a fix for this
 
     return is_changed
 
 
 def change_mac_wallpaper(wallpaper_path: str) -> bool:
-    print("Oops, MacOS not yet supported")
+    print("[red]Oops, MacOS not yet supported")
     return False
 
 
