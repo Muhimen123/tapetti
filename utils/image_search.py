@@ -38,3 +38,4 @@ def filter_result_by_tag(image_data: list, tag: str) -> List:
     :return: list of dict. filtered dict 
     """
     return [image for image in image_data if tag in image["tags"]]
+

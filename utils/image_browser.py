@@ -5,6 +5,7 @@ from rich.console import Console
 from colorama import Fore, Style
 
 
+
 def browser_image(start: int = 0, limit: int = 15) -> None:
     """
     Browse all the wallpapers in the github repo
@@ -57,8 +58,9 @@ def generate_table(image_data: list) -> None:
             f"{width}x{height}",
             "Horizontal" if width > height else "Vertical",
             image["theme"],
-            " ".join(image["color"][:min(len(image["color"]), 3)])
+            ", ".join(image["color"][:min(len(image["color"]), 3)])
         )
 
     console: Console = Console()
     console.print(image_data_table)
+

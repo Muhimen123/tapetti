@@ -31,3 +31,4 @@ def help_message() -> None:
 
     console: Console = Console()
     console.print(table)
+

@@ -84,7 +84,6 @@ def save_image_content(
     with open(file_path, "wb") as image_file:
         for chunk in image_content:
             image_file.write(chunk)
-
             progress.update(download_task, advance=len(chunk))
 
 
@@ -124,3 +123,4 @@ def get_new_file_name(path: str) -> str:
         file_name: str = input(text)
 
     return file_name
+

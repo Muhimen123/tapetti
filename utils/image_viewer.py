@@ -8,6 +8,7 @@ from PyInquirer import prompt
 from colorama import Fore, Style
 
 
+
 def image_viewer() -> None:
 
     """
@@ -38,7 +39,7 @@ def image_viewer() -> None:
     else:
         link: str = input("Please enter download link: ")
 
-    path: str = f"{os.getcwd()}\\data\\images\\"
+    path: str = os.path.join(os.getcwd(), "data", "images")
 
     downloader.download_image(link, path, "tmp_wallpaper_preview_image.png")
     Image.open(path + "tmp_wallpaper_preview_image.png").show()
@@ -58,7 +59,6 @@ def tid_repo_prompt(image_data_url: str):
         response: requests.Response = requests.get(image_data_url)
 
     except Exception as error:
-        print(error)
         print(Fore.RED + "Perhaps you are not connected to the internet. Mind checking it again?" + Style.RESEST_ALL)
 
     else:
@@ -74,3 +74,4 @@ def tid_repo_prompt(image_data_url: str):
         file_name = image_data[entry_number]["image_name"]
         file_type = image_data[entry_number]["file_type"]
         return f"https://raw.githubusercontent.com/Muhimen123/TID/main/images/{file_name}.{file_type}"
+

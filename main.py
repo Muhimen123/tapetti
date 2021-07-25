@@ -25,3 +25,4 @@ if len(sys.argv) < 2:
     sys.argv.append(prompt(QUESTIONS)["command"])
 
 command_controller.command_controller(sys.argv)
+

@@ -12,6 +12,7 @@ from colorama import Fore, Style
 from utils.image_viewer import tid_repo_prompt
 
 
+
 def save_image() -> None:
     """
     sets the image as the desktop wallpaper
@@ -93,7 +94,7 @@ def save_image() -> None:
         is_changed: bool = change_linux_wallpaper(wallpaper_path)
 
     else:
-        print(Fore.RED + "Sorry, couldn't detect OS.")
+        print(Fore.RED + "Sorry, couldn't detect OS." + Style.RESET_ALL)
         is_changed: bool = False
 
     print(
@@ -116,8 +117,10 @@ def change_windows_wallpaper(wallpaper_path: str) -> bool:
     with open(wallpaper_path, "rb") as file:
         wallpaper_image: AnyStr = file.read()
 
-        suffix_path: str = "\\AppData\\Roaming\\Microsoft\\Windows\\Themes\\TranscodedWallpaper"
-        windows_wallpaper_path: str = f"{Path.home()}{suffix_path}"
+        #suffix_path: str = "\\AppData\\Roaming\\Microsoft\\Windows\\Themes\\TranscodedWallpaper"
+        suffix_path: str = os.path.join("Appdata", "Roaming", "Microsoft", "Windows", "Themes", "TranscodedWallpaper")
+        #windows_wallpaper_path: str = f"{Path.home()}{suffix_path}"
+        windows_wallpaper_path: str = os.path.join(Path.home(), suffix_path)
 
         if os.path.isfile(windows_wallpaper_path):
             with open(windows_wallpaper_path, "wb") as img_file:
@@ -134,6 +137,7 @@ def change_mac_wallpaper(wallpaper_path: str) -> bool:
     print("Oops, MacOS not yet supported")
     return False
 
+
 def read_status_code(process):
     # Calculate the return value code
     return_value = int(bin(process).replace("0b", "").rjust(16, '0')[:8], 2)
@@ -147,7 +151,7 @@ def change_linux_wallpaper(wallpaper_path: str) -> bool:
             os.system(f"gsettings set org.gnome.desktop.background picture-uri file://{wallpaper_path}")
         )
 
-    if de and "kde" in de.lower():
+    elif de and "kde" in de.lower():
         command = """
                 qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript '
                     var allDesktops = desktops();
@@ -166,7 +170,6 @@ def change_linux_wallpaper(wallpaper_path: str) -> bool:
         return read_status_code(
             os.system(command)
         )
-        
 
     elif de and "xfce" in de.lower():
         properties = subprocess.Popen("xfconf-query -c xfce4-desktop -l", shell=True, stdout=subprocess.PIPE) 
@@ -187,3 +190,4 @@ def change_linux_wallpaper(wallpaper_path: str) -> bool:
     return read_status_code(
         os.system(f"feh --bg-scale {wallpaper_path}")
     )
+
