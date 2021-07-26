@@ -1,6 +1,5 @@
 certifi==2021.5.30
 chardet==4.0.0
-colorama==0.4.4
 commonmark==0.9.1
 idna==2.10
 Pillow==8.3.1
