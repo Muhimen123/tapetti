@@ -41,7 +41,7 @@ def image_viewer() -> None:
     path: str = os.path.join(os.getcwd(), "data", "images")
 
     downloader.download_image(link, path, "tmp_wallpaper_preview_image.png")
-    Image.open(path + "tmp_wallpaper_preview_image.png").show()
+    Image.open(os.path.join(path, "tmp_wallpaper_preview_image.png")).show()
 
 
 def tid_repo_prompt(image_data_url: str):
