@@ -1,3 +1,5 @@
+NOTE: Make sure to fork the `dev` branch instead of `main`
+
 # Understanding The File Structure
 
 ```
