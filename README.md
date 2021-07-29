@@ -91,8 +91,46 @@ For now, you can run it from the source. More installation methods coming soon.
   - <details>
     <summary>Download Binary</summary>
 
-    The easiest way to download and run tapetti is via the binary executable. Navigate to the [release](https://github.com/Muhimen123/tapetti/releases) page. Currently you will find two executalbe. One for linux and another for windows. Download the executalbe you need. And in the same directory create an empty directory called `data`. This will be your default directory for storing images and other data. 
-    It's recommended to run the binary from the terminal. 
+    <!-- The easiest way to download and run tapetti is via the binary executable. Navigate to the [release](https://github.com/Muhimen123/tapetti/releases) page. Currently you will find two executalbe. One for linux and another for windows. Download the executalbe you need. And in the same directory create an empty directory called `data`. This will be your default directory for storing images and other data.  -->
+    <!-- It's recommended to run the binary from the terminal.  -->
+
+    - <details>
+      <summary> Windows Installation </summary>
+    
+      First step, download the `tapetti.exe` file.
+      After that create a folder named `data` in the same folder where you donwloaded the `tapttie.exe`.
+      Now, although you can run tapetti by double clicking the exe, it's recommended to use it via terminal for better experience.
+
+      </details>
+
+    - <details> 
+      <summary> Linux installation </summary> 
+
+      First step, download the `tapetti.tar.gz` file. It contains an empty folder called `data` and a binary called `tapetti`.
+      You can run the app from the terminal by navigating to the correct path. Or, you can put it in the path to run it from anywhere. 
+      Make sure to have the `data` folder in the same path where you have `tapetti`.
+
+      If you are familiar with the terminal, you can run these three commands to get tapetti up and running.
+
+      Download
+
+      ```bash
+      wget https://github.com/Muhimen123/tapetti/releases/download/v1.0/tapetti.tar.gz
+      ```
+
+      Extract
+
+      ```bash
+      tar -xf tapetti.tar.gz
+      ```
+
+      Run
+
+      ```bash
+      ./tapetti
+      ```
+
+      </details>
 
   </details>
 
@@ -130,4 +168,13 @@ For now, you can run it from the source. More installation methods coming soon.
 # Need Help!
 
 The wallpaper change feature only works for windows since changing wallpaper is different accross different platforms. It will be a great help if you can help me up with `GNU\Linux`(partial support available) and `MacOS` integration. Check [CONTRIBUTING.md](https://github.com/Muhimen123/tapetti/blob/main/CONTRIBUTING.md) for further help. Thanks!
+
+# What's Next?
+
+There are few things in my mind I want to implement in the future(not in any particular order):
+  - Imave Viewer GUI
+  - Seperate website to view all the images at once
+  - Keep note of all the downloaded images. Something like a local TID repo
+
+Do you think you can help me with any of the above? Feel free to do so!
 
