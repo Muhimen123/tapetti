@@ -89,6 +89,14 @@ Tapetti currently ships with 6 commands. Which is probably more than you need.
 For now, you can run it from the source. More installation methods coming soon. 
 
   - <details>
+    <summary>Download Binary</summary>
+
+    The easiest way to download and run tapetti is via the binary executable. Navigate to the [release](https://github.com/Muhimen123/tapetti/releases) page. Currently you will find two executalbe. One for linux and another for windows. Download the executalbe you need. And in the same directory create an empty directory called `data`. This will be your default directory for storing images and other data. 
+    It's recommended to run the binary from the terminal. 
+
+  </details>
+
+  - <details>
     <summary> Install From The Source </summary>
 
     Assuming that you have both [git](https://git-scm.com/downloads) and [python](https://www.python.org/downloads/) properly installed, you can run the following commands to set up Tapetti for your machine. 
