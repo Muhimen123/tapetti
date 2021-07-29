@@ -10,9 +10,13 @@
 
 </div>
 
+<div align="center"> 
+
 # TAPETTI
 
-Tapetti is a wallpaper manager that you never asked for. Feature-rich yet minimalistic, powerful yet simple to use. Save, download, manage all your wallpapers in one go!
+</div>
+
+Tapetti is the wallpaper manager that you never asked for. Feature-rich yet minimalistic, powerful and simple to use. Save, download, manage all your wallpapers in one go!
 
 <div align="center"> 
 
@@ -30,7 +34,7 @@ Tapetti is a wallpaper manager that you never asked for. Feature-rich yet minima
 
 </div>
 
-# Featuers
+## Features
 
 Tapetti currently ships with 6 commands. Which is probably more than you need. 
 
@@ -57,7 +61,7 @@ Tapetti currently ships with 6 commands. Which is probably more than you need.
 
     Prints a table. Shows all the available commands.
 
-  </details>
+ 		</details>
 
   - <details> 
     <summary> save </summary>
@@ -66,14 +70,14 @@ Tapetti currently ships with 6 commands. Which is probably more than you need.
 
     ![Save](http://res.cloudinary.com/muhimen/image/upload/v1627529816/ifxuser8jkjabygtfkvo.gif)
 
-  </details>
+		</details>
 
   - <details> 
     <summary> search </summary>
     
     Search for an image in the TID repo. Currently you can only filter search results by tag name.
 
-  </details>
+	 </details>
 
   - <details> 
     <summary> view </summary>
@@ -84,21 +88,21 @@ Tapetti currently ships with 6 commands. Which is probably more than you need.
 
   </details>
 
-# Installation
+## Installation
 
 For now, you can run it from the source. More installation methods coming soon. 
 
   - <details>
     <summary>Download Binary</summary>
 
-    <!-- The easiest way to download and run tapetti is via the binary executable. Navigate to the [release](https://github.com/Muhimen123/tapetti/releases) page. Currently you will find two executalbe. One for linux and another for windows. Download the executalbe you need. And in the same directory create an empty directory called `data`. This will be your default directory for storing images and other data.  -->
+    <!-- The easiest way to download and run tapetti is via the binary executable. Navigate to the [release](https://github.com/Muhimen123/tapetti/releases) page. Currently you will find two executables. One for linux and another for windows. Download the executable you need. And in the same directory create an empty directory called `data`. This will be your default directory for storing images and other data.  -->
     <!-- It's recommended to run the binary from the terminal.  -->
 
     - <details>
       <summary> Windows Installation </summary>
     
       First step, download the `tapetti.exe` file.
-      After that create a folder named `data` in the same folder where you donwloaded the `tapttie.exe`.
+      After that create a folder named `data` in the same folder where you downloaded the `tapetti.exe`.
       Now, although you can run tapetti by double clicking the exe, it's recommended to use it via terminal for better experience.
 
       </details>
@@ -165,16 +169,16 @@ For now, you can run it from the source. More installation methods coming soon.
 
   </details>
 
-# Need Help!
+## Need Help!
 
-The wallpaper change feature only works for windows since changing wallpaper is different accross different platforms. It will be a great help if you can help me up with `GNU\Linux`(partial support available) and `MacOS` integration. Check [CONTRIBUTING.md](https://github.com/Muhimen123/tapetti/blob/main/CONTRIBUTING.md) for further help. Thanks!
+The wallpaper changing feature only works for Windows since changing wallpaper is different accross platforms. It will be great if you can help me with `GNU/Linux` (partially done) and `MacOS` integration. Check out [CONTRIBUTING.md](https://github.com/Muhimen123/tapetti/blob/main/CONTRIBUTING.md) for further help. Thanks!
 
-# What's Next?
+## What's Next?
 
-There are few things in my mind I want to implement in the future(not in any particular order):
-  - Imave Viewer GUI
-  - Seperate website to view all the images at once
-  - Keep note of all the downloaded images. Something like a local TID repo
+There are few things in my mind I want to implement in the future:
 
-Do you think you can help me with any of the above? Feel free to do so!
+- Image Viewer GUI
+- Separate website to view all the images at once
+- Keep note of all the downloaded images. Something like a local TID repo
 
+If you think you can help with any of these, feel free to do so!
