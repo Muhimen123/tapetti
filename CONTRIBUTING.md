@@ -1,6 +1,6 @@
 NOTE: Make sure to fork the `dev` branch instead of `main`
 
-# Understanding The File Structure
+## Understanding The File Structure
 
 ```
 main.py 
@@ -10,13 +10,13 @@ main.py
   
 ```
 
- - `main.py` The file you will need to run to interact with the application.
- - `data/images` Holds downloaded images, wallpaper and preview image.
+ - `main.py` The file you need to run to interact with the application.
+ - `data/images` Contains downloaded images, wallpaper and preview image.
  - `utils` Various features of the application.
 
-# Adding Platform Support
+## Adding Platform Support
 
- Navigate to `utils/imageSaver.py`. Down below, you will find three functions.
+ Navigate to `utils/imageSaver.py`. There, you will find three functions.
   - change_windows_wallpaper (completed)
   - change_mac_wallpaper (yet to complete)
   - change_linux_wallpaper (yet to complete)
