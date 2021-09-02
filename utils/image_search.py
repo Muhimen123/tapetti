@@ -1,7 +1,7 @@
 from typing import List
 
 import requests
-from rich import print
+from rich import print as rprint
 from PyInquirer import prompt
 
 from utils.image_browser import generate_table
@@ -42,10 +42,10 @@ def search_image() -> None:
             generate_table(filtered_result)
 
         else:
-            print("[red]Oops, something went wrong. {response.status_code}")
+            rprint("[red]Oops, something went wrong. {response.status_code}")
 
     except requests.exceptions.RequestException:
-        print("[red]Perhaps you are not connected to the internet.")
+        rprint("[red]Perhaps you are not connected to the internet.")
 
 
 class Filter:

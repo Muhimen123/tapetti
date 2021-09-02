@@ -1,6 +1,6 @@
 import requests
 from rich import box
-from rich import print
+from rich import print as rprint
 from rich.table import Table
 from rich.console import Console
 
@@ -22,10 +22,10 @@ def browser_image(start: int = 0, limit: int = 15) -> None:
             generate_table(response.json())
 
         else:
-            print(f"[red]Oops, something went wrong {response.status_code}")
+            rprint(f"[red]Oops, something went wrong {response.status_code}")
 
-    except Exception as error:
-        print("[red]Turns out you are not connected to the internet")
+    except requests.exceptions.RequestException:
+        rprint("[red]Turns out you are not connected to the internet")
 
 
 def generate_table(image_data: list) -> None:
@@ -61,5 +61,4 @@ def generate_table(image_data: list) -> None:
         )
 
     console: Console = Console()
-    console.print(image_data_table)
-
+    console.rprint(image_data_table)

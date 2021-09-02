@@ -31,4 +31,3 @@ def command_controller(command: List[str]) -> None:
         return
 
     action()
-

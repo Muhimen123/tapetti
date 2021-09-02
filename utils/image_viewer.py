@@ -3,9 +3,9 @@ from typing import List, Union, Dict, Optional, Any
 
 import requests
 from PIL import Image
-from rich import print
-from utils import downloader
+from rich import print as rprint
 from PyInquirer import prompt
+from utils import downloader
 
 
 def image_viewer() -> None:
@@ -27,7 +27,7 @@ def image_viewer() -> None:
             ]
         }
     ]
-    
+
     answer = prompt(questions)["view_type"]
 
     if answer == "TID Repo":
@@ -57,12 +57,12 @@ def tid_repo_prompt(image_data_url: str):
     try:
         response: requests.Response = requests.get(image_data_url)
 
-    except Exception as error:
-        print("[red]Perhaps you are not connected to the internet. Mind checking it again?")
+    except requests.exceptions.RequestException:
+        rprint("[red]Perhaps you are not connected to the internet. Mind checking it again?")
 
     else:
         if not response.ok:
-            print(f"[red]Oops, something went wrong {response.status_code}")
+            rprint(f"[red]Oops, something went wrong {response.status_code}")
             return
 
         image_data: Any = response.json()
@@ -73,4 +73,3 @@ def tid_repo_prompt(image_data_url: str):
         file_name = image_data[entry_number]["image_name"]
         file_type = image_data[entry_number]["file_type"]
         return f"https://raw.githubusercontent.com/Muhimen123/TID/main/images/{file_name}.{file_type}"
-

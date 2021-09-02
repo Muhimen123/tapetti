@@ -3,12 +3,11 @@ import ctypes
 import platform
 import subprocess
 from pathlib import Path
-import re
 from typing import List, Union, Dict, Optional, AnyStr, Any
 
-from utils import downloader
 from PyInquirer import prompt
-from rich import print
+from rich import print as rprint
+from utils import downloader
 from utils.image_viewer import tid_repo_prompt
 
 
@@ -79,7 +78,7 @@ def save_image() -> None:
             if os.path.isfile(wallpaper_path):
                 break
 
-            print(f"[red]No file found in path {path}")
+            rprint(f"[red]No file found in path {path}")
 
     system_os: str = platform.system()
 
@@ -93,12 +92,12 @@ def save_image() -> None:
         is_changed: bool = change_linux_wallpaper(wallpaper_path)
 
     else:
-        print("[red]Sorry, couldn't detect OS.")
+        rprint("[red]Sorry, couldn't detect OS.")
         is_changed: bool = False
 
     message: str = "[green]Changed wallpaper" if is_changed else "[red]Couldn't change wallpaper"
 
-    print(message)
+    rprint(message)
 
 
 def change_windows_wallpaper(wallpaper_path: str) -> bool:
@@ -106,7 +105,7 @@ def change_windows_wallpaper(wallpaper_path: str) -> bool:
 
     # Windows resets back to old wallpaper everytime pc reboots.
     # This portion of code aims to solve it by changing the main
-    # wallpaper from the root path. 
+    # wallpaper from the root path.
 
     with open(wallpaper_path, "rb") as file:
         wallpaper_image: AnyStr = file.read()
@@ -119,14 +118,14 @@ def change_windows_wallpaper(wallpaper_path: str) -> bool:
                 img_file.write(wallpaper_image)
 
         else:
-            print("[yellow]Changed wallpaper temporarily. Might get changed when pc reboots")
+            rprint("[yellow]Changed wallpaper temporarily. Might get changed when pc reboots")
             # TODO: Create a fix for this
 
     return is_changed
 
 
 def change_mac_wallpaper(wallpaper_path: str) -> bool:
-    print("[red]Oops, MacOS not yet supported")
+    rprint("[red]Oops, MacOS not yet supported")
     return False
 
 
@@ -164,22 +163,21 @@ def change_linux_wallpaper(wallpaper_path: str) -> bool:
         )
 
     elif de and "xfce" in de.lower():
-        properties = subprocess.Popen("xfconf-query -c xfce4-desktop -l", shell=True, stdout=subprocess.PIPE) 
+        properties = subprocess.Popen("xfconf-query -c xfce4-desktop -l", shell=True, stdout=subprocess.PIPE)
         properties = properties.stdout.read().decode("utf-8").split('\n')
-        monitors = list()
-        
+        monitors = []
+
         for monitor in properties:
             if "last-image" in monitor:
                 monitors.append(monitor)
-            
+
         for monitor in monitors:
             command = f"xfconf-query -c xfce4-desktop -p {monitor} -s {wallpaper_path}"
             result = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
         return True
 
 
-    print(f"Did not recognise DE, defaulting to using `feh` to set wallpaper")
+    print("Did not recognise DE, defaulting to using `feh` to set wallpaper")
     return read_status_code(
         os.system(f"feh --bg-scale {wallpaper_path}")
     )
-

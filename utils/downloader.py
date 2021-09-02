@@ -2,9 +2,10 @@ import os
 from typing import Optional, Iterator, List, Dict, Union, Tuple
 
 import requests
-from rich import print
 from PyInquirer import prompt
-from rich.progress import Progress, TaskID
+from rich import print as rprint
+from rich.progress import Progress
+from rich.progress import TaskID
 
 
 QUESTIONS: List[Dict[str, Union[str, List[str]]]] = [
@@ -42,7 +43,7 @@ def download_image(
     try:
         download_content(link, path, file_name)
 
-    except Exception as error:
+    except requests.exceptions.RequestException as error:
         print(error)
         # TODO: Show proper error message
 
@@ -114,7 +115,7 @@ def get_new_file_name(path: str) -> str:
     file_name: str = input(text)
 
     while not file_name or os.path.isfile(os.path.join(path, file_name)):
-        print(
+        rprint(
             "[red]A file with the name already exists or the filename is invalid. Please enter another one."
         )
 

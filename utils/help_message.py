@@ -1,4 +1,3 @@
-import json
 from typing import Dict, Union, List, Optional
 
 from rich import box
@@ -38,7 +37,7 @@ def help_message() -> None:
           "description": "Open an image to preview",
           "requirements": ["image link or TID image number"] 
       }
-    ] 
+    ]
 
     table: Table = Table(
         title="Available Commands",
@@ -61,4 +60,3 @@ def help_message() -> None:
 
     console: Console = Console()
     console.print(table)
-
