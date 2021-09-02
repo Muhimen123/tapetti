@@ -142,5 +142,8 @@ cython_debug/
 # Pycharm
 .idea
 
+# VSCode
+.vscode
+
 # image data
 data/images/*

@@ -2,6 +2,7 @@ from typing import List
 
 import requests
 from rich import print
+from PyInquirer import prompt
 
 from utils.image_browser import generate_table
 
@@ -13,28 +14,48 @@ def search_image() -> None:
     """
 
     image_data_url: str = "https://raw.githubusercontent.com/Muhimen123/TID/main/image_data.json"
-    tag: str = input("Please enter a tag: ")
+
+    filters = Filter()
+    actions = {
+        "tag": filters.filter_result_by_tag,
+    }
+
+    #TODO: Add chain filter (multiple filter at once)
+    questions = [
+        {
+            "type": "list",
+            "name": "fliter",
+            "message": "Select a filter method",
+            "choices": [
+                "Tag"
+            ]
+        }
+    ]
+
+    answer: str = prompt(questions)["fliter"]
 
     try:
         response: requests.Response = requests.get(image_data_url)
 
         if response.ok:
-            filtered_result: List = filter_result_by_tag(response.json(), tag)
+            filtered_result: List = actions[answer.lower()](response.json())
             generate_table(filtered_result)
 
         else:
             print("[red]Oops, something went wrong. {response.status_code}")
 
-    except Exception as error:
+    except requests.exceptions.RequestException:
         print("[red]Perhaps you are not connected to the internet.")
 
 
-def filter_result_by_tag(image_data: list, tag: str) -> List:
-    """
-    filters the search result by the given tag
-    :param image_data: list of dict. the raw data from TID repo
-    :param tag: the tag to apply filter
-    :return: list of dict. filtered dict 
-    """
-    return [image for image in image_data if tag in image["tags"]]
+class Filter:
 
+    @staticmethod
+    def filter_result_by_tag(image_data: list )-> List:
+        """
+        filters the search result by the given tag
+        :param image_data: list of dict. the raw data from TID repo
+        :return: list of dict. filtered dict
+        """
+        tag = input("Enter tag name: ")
+        return [image for image in image_data if tag.lower() in [img_tag.lower() for img_tag in image["tags"]]]
